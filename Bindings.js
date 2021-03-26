@@ -66,10 +66,10 @@ export class Computed extends Observable {
 
 }
 
-	first_name = new Observable("Dalai");
-	second_name = new Observable("Lama");
+	var first_name = new Observable("Dalai");
+	var second_name = new Observable("Lama");
 
-	full_name = new Computed(() => `HH ${first_name.value} ${second_name.value}`, [first_name, second_name]);
+	var full_name = new Computed(() => `HH ${first_name.value} ${second_name.value}`, [first_name, second_name]);
 	full_name.subscribe((val) => console.log(`The HH changed to ${val}`)); // Chaining
 
 	first_name.value = "Panchen";
