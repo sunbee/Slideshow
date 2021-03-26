@@ -23,4 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
 						[number_first, number_second]);
 	const result_out = document.getElementById("summa");
 	bind2DOM(summa, result_summa);
+
+	const name = new Observable("Lal");
+	const name_first = document.getElementById("name_first");
+	bind2DOM(name_first, name);
+
+	const surname = new Observable("Bahadur");
+	const name_second = document.getElementById("name_second");
+	bind2DOM(name_second, surname);
+
+	const full_name = new Computed(() => `${name.value} ${surname.value}`, [name, surname]);
+	const answer = document.getElementById("name_full");
+	bind2DOM(answer, full_name);
+
+	const outcome = new Computed(() => { 
+		if (surname.value == 'Shastri') {
+			return "Bravo! You win!"
+		} else {
+			return "Keep trying!"
+		}}, [surname]);
+	const score = document.getElementById("score");
+	bind2DOM(score, outcome);
 });
