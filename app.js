@@ -1,4 +1,4 @@
-import { Observable, bind2DOM } from './Bindings.js';
+import { Observable, Computed, bind2DOM } from './Bindings.js';
 
 /*
 Wrap the data in an instance of Observable class.
@@ -11,9 +11,16 @@ Use a timeout function to see step-step changes.
 */
 document.addEventListener('DOMContentLoaded', () => {
 
-	const input_data = new Observable("Oh-tah!");
-	const input_element = document.getElementById("bound_input");
-	bind2DOM(input_element, input_data);
-	input_data.value = "Clap!";
-	setTimeout(() => {input_data.value = "Humbug!";}, 3000);
+	const number_first = new Observable(3);
+	const number_one = document.getElementById("number_one");
+	bind2DOM(number_one, number_first);
+
+	const number_second = new Observable(4);
+	const number_two = document.getElementById("number_two");
+	bind2DOM(number_two, number_second)
+
+	const result_summa = new Computed(() => Number(number_first.value) + Number(number_second.value),
+						[number_first, number_second]);
+	const result_out = document.getElementById("summa");
+	bind2DOM(summa, result_summa);
 });
