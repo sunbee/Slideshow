@@ -1,4 +1,4 @@
-## Multipage App
+## Multi-Page Quiz in SPA
 
 Advance slides and check the answer dynamically. Implementation has the following features:
 1. Each slide in the deck is in the **Slides** folder as an HTML page.
