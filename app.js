@@ -11,35 +11,42 @@ Use a timeout function to see step-step changes.
 */
 document.addEventListener('DOMContentLoaded', () => {
 
-	var number_first = new Observable(3);
-	var number_second = new Observable(4);
-	var summa = new Computed(() => Number(number_first.value) + Number(number_second.value),
-						[number_first, number_second]);
-	var name_first = new Observable("Lal");
-	var name_last = new Observable("Bahadur");
-	var name_full = new Computed(() => `${name_first.value} ${name_last.value}`, [name_first, name_last]);
-	var score = new Computed(() => { 
-		if (name_last.value == 'Shastri') {
-			return "Bravo! You win!"
-		} else {
-			return "Keep trying!"
-		}}, [name_last]);
+	var index = 1;
 
-	var context = {
-		number_one: number_first,
-		number_two: number_second,
-		summa: summa,
-		given_name: name_first,
-		surname: name_last,
-		fullname: name_full,
-		score: score 
-	};
+	/* 
+	Get the container for the slide,
+	and populate contents with ref. to index. 
+	First add the quiz (e.g. Quiz001.html) and then
+	add the slideshow controls (controls.html). 
+	*/
+	var answer;
 
-	var dataBindings = document.querySelectorAll("[data-binding]");
-	dataBindings.forEach(inputElement => {
-		console.log(inputElement);
+	fetch('controls.html')
+		.then(data => data.text())
+		.then( (html) => document.getElementById("Answer").innerHTML = html );
+	fetch('./Slides/Quiz001.html')
+		.then( (data) => data.text() )
+		.then( (html) => document.getElementById("Question").innerHTML = html )
+		.then( () => {
+			answer = document.getElementById("Expected").getAttribute("data-answer");
 
-		bind2DOM(inputElement, context[inputElement.getAttribute("data-binding")])
-	});
+			var data_entry = new Observable('ans');
+			var success = new Computed( () => {
+				console.log(data_entry.value);
+				return (data_entry.value == answer) ? "Good!" : "Try!";
+			}, [data_entry]);
 
+			var context = {
+				response: data_entry,
+				passfail: success
+			};
+
+			document.querySelectorAll("[data-binding]").forEach( (inputElement) => {
+				console.log(inputElement);
+				bind2DOM(inputElement, context[inputElement.getAttribute("data-binding")]);
+
+			});
+		})
+		.then( () => [].slice.call(document.querySelectorAll("[data-binding]"))
+		.forEach( div_element => console.log(div_element.id) ));
 });
