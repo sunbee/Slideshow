@@ -1,4 +1,4 @@
-## Multi-Quiz App with Custom HTML Nodes
+## Multi-Page Quiz in SPA with Custom HTML Nodes
 
 Advance slides and check the answer dynamically. Implementation has the following features:
 1. Each slide in the deck is in the **Slides** folder as an HTML page.
