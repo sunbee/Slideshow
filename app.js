@@ -1,4 +1,4 @@
-import { loadSlide } from '/Slide.js';
+import { loadSlide } from './SlideLoader.js';
 
 /*
 Wrap the data in an instance of Observable class.
@@ -13,6 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	var index = 1;
 	loadSlide(index);
-
 });
 

@@ -4,7 +4,7 @@ async function load_slide(path2html) {
 	return slide;
   };
   
-  export class Slide extends HTMLElement {
+  export class Control extends HTMLElement {
 	  constructor() {
 	  super();
 	};
@@ -14,4 +14,4 @@ async function load_slide(path2html) {
 	};
   };
 
-  customElements.define('slide-quiz', Slide);
+  customElements.define('slide-control', Control);
