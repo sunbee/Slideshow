@@ -1,6 +1,7 @@
 import { Observable, Computed, bind2DOM } from './Bindings.js';
 import { Slide } from '/Slide.js';
-import { Control } from '/Controls.js'
+import { Control } from '/Controls.js';
+import { SlideDeck } from './SlideDeck.js';
 
 function removeAllChildren(parent) {
     /*
@@ -28,6 +29,9 @@ function update_DOM(index) {
     slide.setAttribute("path2html", quiz_name);
     var control = document.createElement("slide-control");
     control.setAttribute("path2html", "./controls.html");
+    var slideDeck = document.createElement("slide-deck");
+    slideDeck.setAttribute("from", "1");
+    slideDeck.setAttribute("to", "3");
 
     var question = document.getElementById("Question");
     removeAllChildren(question);
@@ -35,17 +39,21 @@ function update_DOM(index) {
     var answer = document.getElementById("Answer");
     removeAllChildren(answer);
     answer.appendChild(control);
+
+    var teaser = document.getElementById("Teaser");
+    removeAllChildren(teaser);
+    teaser.appendChild(slideDeck);
 };
 
 export var loadSlide = (index) => {
     update_DOM(index);
-
     /* 
     Allow some time for the creation of new nodes
     and their insertion into DOM. 
     Then, execute data-bindings for reactive elements
     and set the callback for the slide advancement.
     */
+
     setTimeout( () => {
         var answer = document.getElementById("Expected").getAttribute("data-answer");
         var response = new Observable('ans');
@@ -66,6 +74,6 @@ export var loadSlide = (index) => {
         var pagedn = document.getElementById("Pagination").getAttribute("data-pagedn");
         document.getElementById("Next").addEventListener("click", () => {loadSlide(Number(pagedn))});
 
-    }, 1000);
+    }, 100);
 };
 
