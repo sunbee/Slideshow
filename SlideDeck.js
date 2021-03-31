@@ -1,4 +1,5 @@
 import { Slide } from './Slide.js';
+import { removeAllChildren } from './Swissknife.js';
 
 async function initialize_deck(from, to) {
     var deck = [];
@@ -16,22 +17,38 @@ export class SlideDeck extends HTMLElement {
         super();
 
         this._deck = [];
+
+        this._iam = document.createElement("div");
     };
 
     async connectedCallback() {
-        var iam = document.createElement("div");
-
+        
         var from = Number(this.getAttribute("from"));
         var to = Number(this.getAttribute("to"));
+        var current = Number(this.getAttribute("current"));
         await initialize_deck(from, to)
             .then( (deck) => {
                 this._deck = deck;
-                iam.appendChild(this._deck[0]);
-                console.log(iam);
-                this.appendChild(iam);
+                this._iam.appendChild(this._deck[current-1]);
+                this.appendChild(this._iam);
+                console.log(this._iam);
             }
-
         );
+    };
+
+    static get observedAttributes() {
+        return ["current"];
+    }
+
+    async attributeChangedCallback(name, oldvalue, newvalue) {
+        if (!oldvalue) { // null until set
+            console.log("Chnanged" + name + oldvalue + newvalue);
+            return;
+        };
+        removeAllChildren(this._iam);
+        this._iam.appendChild(this._deck[Number(newvalue)-1]);
+        this.appendChild(this._iam);
+        console.log(this._iam);
     };
 
     get deck() {
