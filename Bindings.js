@@ -77,14 +77,42 @@ export class Computed extends Observable {
 	first_name.value = "Vishnu";
 
 export const bind2DOM = (input, observed) => {
-		/*
-		Bind a DOM element of type input to data,
-		with data wrapped in an instance of Observable class,
-		so that any change to data updates the DOM and
-		any change to the DOM updates the data (i.e. Observable instance).
-		*/
-		input.value = observed.value;
-		observed.subscribe(() => input.value = observed.value);
-		input.onkeyup = () => {observed.value = input.value; console.log(observed.value);}
-	}
+	/*
+	Bind a DOM element of type input to data,
+	with data wrapped in an instance of Observable class,
+	so that any change to data updates the DOM and
+	any change to the DOM updates the data (i.e. Observable instance).
+	*/
+	input.value = observed.value;
+	observed.subscribe(() => input.value = observed.value);
+	input.onkeyup = () => {observed.value = input.value; console.log(observed.value);}
+}
 
+export function makeBindings() {
+	/* 
+	Make bindings to update 
+	the player's status in real-time
+	while s/he enters their response 
+	in the text-box.
+	The status is computed based on
+	the answer that is embedded in
+	the quiz HTML.
+	Bindings are made each time that
+	the slide-deck is advanced.
+	*/   
+	var answer = document.getElementById("Expected").getAttribute("data-answer");
+	var response = new Observable('ans');
+	var passfail = new Computed( () => {
+		return (response.value == answer) ? "Good!" : "Try!";
+	}, [response]);
+
+	var context = {
+		response: response,
+		passfail: passfail
+	};
+
+	document.querySelectorAll("[data-binding]").forEach( (inputElement) => {
+		console.log("Bound:" + inputElement);
+		bind2DOM(inputElement, context[inputElement.getAttribute("data-binding")]);
+	});
+};

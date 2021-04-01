@@ -10,7 +10,6 @@ and see the input field updated.
 Use a timeout function to see step-step changes.
 */
 document.addEventListener('DOMContentLoaded', () => {
-
 	var index = 1;
 	loadSlide(index);
 });
