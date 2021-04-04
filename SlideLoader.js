@@ -33,7 +33,7 @@ async function update_DOM(index) {
     
     var control = document.createElement("slide-control");
     control.setAttribute("path2html", "./controls.html");
-    var answer = document.getElementById("Answer");
+    var answer = document.getElementById("Controls");
     removeAllChildren(answer);
     answer.appendChild(control);
 
