@@ -23,6 +23,9 @@ img {
     oveflow: scroll;
 }
   
+#Controls {
+    text-align: center;
+}
 button {
     padding: 3px;
     margin-bottom: 7px;
