@@ -3,10 +3,12 @@ body {
     font-size: 1.2em;
     background-color: #F7C193;
 }
-  
+
 #Header {
     text-align: center;
+    color:#5D2F07;
 }
+
 img {
     width: 100%;
     height: auto;
