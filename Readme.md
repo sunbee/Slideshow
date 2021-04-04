@@ -1,4 +1,4 @@
-## Multi-Page Quiz in SPA with Custom HTML Nodes
+## Multi-Page Quiz in SPA with Custom HTML Nodes and Styling.
 
 Advance slides and check the answer dynamically. Implementation uses custom HTML classes:
 1. `slide-deck` is the deck with a quiz in each slide. The class holds an array of HTML nodes, each of which is an instance of `slide-quiz`, another custom HTML class.
