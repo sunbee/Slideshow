@@ -85,7 +85,29 @@ export const bind2DOM = (input, observed) => {
 	*/
 	input.value = observed.value;
 	observed.subscribe(() => input.value = observed.value);
-	input.onkeyup = () => {observed.value = input.value; console.log(observed.value);}
+	/*
+	Support variegated quiz styles like fill-in-the-blanks
+	or multiple choice by accommodating HTML elements such as
+	INPUT and SELECT. The only constaint is that
+	the HTML element must have a value attribute.
+	*/
+	switch (input.nodeName) {
+		case 'INPUT':
+		  input.onkeyup = () => {
+			observed.value = input.value; 
+			console.log(input.nodeName + " | " + observed.value); 
+		  }
+		  break;
+		case 'SELECT':
+		  input.onchange = () => {
+			observed.value = input.value; 
+			console.log(input.nodeName + " | " + observed.value);
+		  }
+		  break;
+		default:
+		  console.log(input.nodeName + " | " + observed.value);
+		}
+	   
 }
 
 export function makeBindings() {
@@ -112,7 +134,7 @@ export function makeBindings() {
 	};
 
 	document.querySelectorAll("[data-binding]").forEach( (inputElement) => {
-		console.log("Bound:" + inputElement);
+		console.log("Bound: " + inputElement.id + " | " + inputElement.nodeName);
 		bind2DOM(inputElement, context[inputElement.getAttribute("data-binding")]);
 	});
 };
