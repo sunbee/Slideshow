@@ -25,7 +25,7 @@ async function update_DOM(index) {
     */
     var slideDeck = document.createElement("slide-deck");
     slideDeck.setAttribute("from", "1");
-    slideDeck.setAttribute("to", "6");
+    slideDeck.setAttribute("to", "8");
     slideDeck.setAttribute("current", "1");
     var question = document.getElementById("Question");
     removeAllChildren(question);
